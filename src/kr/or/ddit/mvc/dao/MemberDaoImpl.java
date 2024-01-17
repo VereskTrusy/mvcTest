@@ -6,8 +6,18 @@ import kr.or.ddit.util.JDBCUtil3;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MemberDaoImpl implements IMemberDao {
+
+    private static MemberDaoImpl instance;
+
+    private MemberDaoImpl(){  }
+
+    public static MemberDaoImpl getInstance() {
+        if(instance == null) instance = new MemberDaoImpl();
+        return instance;
+    }
 
     @Override
     public int insertMember(MemberVo memVo) {
@@ -173,4 +183,42 @@ public class MemberDaoImpl implements IMemberDao {
 
         return cnt;
     }
+
+    /**
+     * 수정할 필드명과 회원ID를 입력 받아서 필드명에 해당하는 정보만 update 하는 메서드
+     * @param info
+     * @return
+     */
+    @Override
+    public int updateInfo(Map<String, Object> info) {
+        int cnt = 0;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        //ResultSet rs = null;
+
+        String updateField = (String) info.get("updateField"); // 필드명
+        String updateData = (String) info.get("updateData");
+        MemberVo memberVo = (MemberVo) info.get("memberVo"); // 회원정보
+
+        try {
+            conn = JDBCUtil3.getConnection();
+            String sql = " UPDATE MYMEMBER SET "+updateField+" = ? " +
+                    " WHERE MEM_ID = ? ";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, updateData);
+            ps.setString(2, memberVo.getMem_id());
+
+            cnt = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            //if(null != rs) try { rs.close(); } catch (SQLException e ) { e.printStackTrace(); }
+            if(null != ps) try { ps.close(); } catch (SQLException e ) { e.printStackTrace(); }
+            if(null != conn) try { conn.close(); } catch (SQLException e ) { e.printStackTrace(); }
+        }
+
+        return cnt;
+    }
+
 }

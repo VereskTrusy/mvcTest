@@ -3,6 +3,7 @@ package kr.or.ddit.mvc.dao;
 import kr.or.ddit.mvc.vo.MemberVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 실제 DB와 연결해서 SQL문을 수행하여 결과를 작성해서
@@ -54,4 +55,11 @@ public interface IMemberDao {
      * @return 검색된 회원ID의 갯수
      */
     public int getMemberCount(String memId);
+
+    /**
+     * 수정할 필드명과 회원ID를 입력 받아서 필드명에 해당하는 정보만 update 하는 메서드
+     * @param info
+     * @return
+     */
+    public int updateInfo(Map<String,Object> info);
 }

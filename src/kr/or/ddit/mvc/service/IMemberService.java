@@ -3,6 +3,7 @@ package kr.or.ddit.mvc.service;
 import kr.or.ddit.mvc.vo.MemberVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service객체는 DAO에 만들어진 메서드를 원하는 작업에 맞게 호출하여
@@ -49,4 +50,11 @@ public interface IMemberService {
      * @return 검색된 회원ID의 갯수
      */
     public int getMemberCount(String memId);
+
+    /**
+     * 수정할 필드명과 회원ID를 입력 받아서 필드명에 해당하는 정보만 update 하는 메서드
+     * @param info
+     * @return
+     */
+    public int updateInfo(Map<String, Object> info);
 }
