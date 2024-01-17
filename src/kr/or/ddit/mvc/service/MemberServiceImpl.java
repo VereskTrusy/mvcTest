@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class MemberServiceImpl implements IMemberService {
     // DAO객체의 참조값이 저장될 변수 선언
+    private static MemberServiceImpl instance = null;
     private IMemberDao dao;
-    private static MemberServiceImpl instance;
 
     // 생성자
     private MemberServiceImpl() {

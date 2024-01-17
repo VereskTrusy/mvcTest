@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class MemberDaoImpl implements IMemberDao {
 
-    private static MemberDaoImpl instance;
+    private static MemberDaoImpl instance = null;
 
     private MemberDaoImpl(){  }
 
